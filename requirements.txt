@@ -1,0 +1,23 @@
+# Core ML
+torch>=2.2
+transformers>=4.40
+accelerate>=0.28
+datasets>=2.18
+evaluate>=0.4
+
+# Audio
+librosa>=0.10
+soundfile>=0.12
+
+# Metrics
+jiwer>=3.0
+
+# Serving
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+gradio>=4.25
+
+# Config / logging
+pyyaml>=6.0
+tensorboard>=2.16

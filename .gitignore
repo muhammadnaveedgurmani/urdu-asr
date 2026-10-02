@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Models & data (large; never commit)
+models/
+data/
+*.bin
+*.pt
+*.onnx
+checkpoints/
+runs/
+
+# HF / datasets caches
+.cache/
+*.arrow
+
+# Logs & results (regenerate via scripts)
+logs/
+results/*.json
+!results/.gitkeep
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Notebooks
+.ipynb_checkpoints/

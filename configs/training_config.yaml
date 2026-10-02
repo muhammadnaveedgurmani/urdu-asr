@@ -1,0 +1,40 @@
+# Training configuration for Lightweight Urdu ASR (Whisper-small fine-tune)
+# Override any value from the CLI, e.g.:
+#   python src/train.py --config configs/training_config.yaml --learning_rate 5e-6
+
+model_name: openai/whisper-small
+language: ur
+task: transcribe
+
+# Audio
+sample_rate: 16000
+max_audio_seconds: 30          # clips longer than this are dropped in data_prep
+
+# Optimization
+learning_rate: 1.0e-5
+num_train_epochs: 3
+per_device_train_batch_size: 8
+per_device_eval_batch_size: 8
+gradient_accumulation_steps: 2
+warmup_steps: 500
+gradient_checkpointing: true
+fp16: true
+max_grad_norm: 1.0
+
+# Evaluation / checkpointing
+eval_strategy: steps          # transformers>=4.40 name (was evaluation_strategy)
+eval_steps: 500
+save_steps: 500
+save_total_limit: 2
+logging_steps: 100
+predict_with_generate: true
+generation_max_length: 225
+load_best_model_at_end: true
+metric_for_best_model: wer
+greater_is_better: false
+
+# IO
+output_dir: ./models/whisper-small-ur
+logging_dir: ./logs
+report_to: tensorboard
+seed: 42
