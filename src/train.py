@@ -12,8 +12,13 @@ Config values can be overridden from the CLI, e.g. --learning_rate 5e-6.
 """
 
 import argparse
+import os
+import sys
 from dataclasses import dataclass
 from typing import Any, Dict, List, Union
+
+# Allow `python src/train.py` from the repo root to import src/.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import torch
 import yaml

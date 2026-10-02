@@ -18,7 +18,11 @@ Usage:
 import argparse
 import json
 import os
+import sys
 import tempfile
+
+# Allow `python src/evaluate.py` from the repo root to import src/.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 import soundfile as sf

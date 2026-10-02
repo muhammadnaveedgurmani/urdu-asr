@@ -18,6 +18,12 @@ Usage:
 """
 
 import argparse
+import os
+import sys
+
+# Allow `python src/data_prep.py` from the repo root: `src/` is put on
+# sys.path by the interpreter, so add the repo root for `src.*` imports.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from datasets import Audio, DatasetDict, load_dataset
 
@@ -54,9 +60,10 @@ def main() -> None:
 
     print(f"Loading {DATASET_ID} [{LANGUAGE}] ...")
     # split="train" / "test" exist for Common Voice; validation is folded into train.
+    # token=True reuses the saved `hf auth login` credential for the gated repo.
     raw = DatasetDict({
-        "train": load_dataset(DATASET_ID, LANGUAGE, split="train", trust_remote_code=True),
-        "test": load_dataset(DATASET_ID, LANGUAGE, split="test", trust_remote_code=True),
+        "train": load_dataset(DATASET_ID, LANGUAGE, split="train", token=True),
+        "test": load_dataset(DATASET_ID, LANGUAGE, split="test", token=True),
     })
 
     # 1. Resample to 16 kHz on the fly.

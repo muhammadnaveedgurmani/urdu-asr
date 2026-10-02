@@ -13,8 +13,12 @@ Run:
 """
 
 import os
+import sys
 import tempfile
 from contextlib import asynccontextmanager
+
+# Allow running from the repo root to import src/.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
