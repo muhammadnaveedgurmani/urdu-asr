@@ -1,17 +1,15 @@
-"""Prepare Mozilla Common Voice (Urdu) for Whisper fine-tuning.
+"""Prepare Urdu Common Voice for Whisper fine-tuning.
 
 Pipeline:
-  1. Load the Urdu subset of Common Voice from the Hugging Face Hub.
+  1. Load the processed Urdu Common Voice dataset from Hugging Face Hub.
   2. Resample all audio to 16 kHz (Whisper's native sample rate).
   3. Normalize transcripts with src/normalize.py.
   4. Drop empty transcripts and clips longer than --max_seconds.
   5. Save a Hugging Face DatasetDict to disk for src/train.py.
 
-NOTE ON ACCESS: Common Voice is a *gated* dataset. Before running this you must
-  a) create a Hugging Face account,
-  b) open https://huggingface.co/datasets/mozilla-foundation/common_voice_17_0
-     and click "Agree and access repository" (accept the terms), and
-  c) run `huggingface-cli login` (or set HF_TOKEN) on the machine that runs this.
+Dataset: UmarRamzan/common-voice-urdu-processed (public, no gating).
+Note: mozilla-foundation/common_voice_17_0 was removed from HF in Oct 2025
+(Mozilla Data Collective only now), so we use this processed mirror.
 
 Usage:
     python src/data_prep.py --output_dir ./data/cv_ur --max_train_samples 2000
@@ -29,8 +27,7 @@ from datasets import Audio, DatasetDict, load_dataset
 
 from src.normalize import normalize_urdu
 
-DATASET_ID = "mozilla-foundation/common_voice_17_0"
-LANGUAGE = "ur"
+DATASET_ID = "UmarRamzan/common-voice-urdu-processed"
 SAMPLE_RATE = 16000
 
 
@@ -58,12 +55,12 @@ def _duration_hours(dataset) -> float:
 def main() -> None:
     args = parse_args()
 
-    print(f"Loading {DATASET_ID} [{LANGUAGE}] ...")
-    # split="train" / "test" exist for Common Voice; validation is folded into train.
-    # token=True reuses the saved `hf auth login` credential for the gated repo.
+    print(f"Loading {DATASET_ID} ...")
+    # The processed mirror has train/test splits, no language config needed.
+    # token=True reuses the saved `hf auth login` credential.
     raw = DatasetDict({
-        "train": load_dataset(DATASET_ID, LANGUAGE, split="train", token=True),
-        "test": load_dataset(DATASET_ID, LANGUAGE, split="test", token=True),
+        "train": load_dataset(DATASET_ID, split="train", token=True),
+        "test": load_dataset(DATASET_ID, split="test", token=True),
     })
 
     # 1. Resample to 16 kHz on the fly.
