@@ -117,12 +117,23 @@ python src/evaluate.py --data_dir ./data/cv_ur \
 
 ## Results
 
-*To be filled after the Colab training run (`src/evaluate.py` prints this table).*
+**Trained 2026-10-05 on Google Colab (Tesla T4):** Whisper-small fine-tuned on 4,000 Urdu utterances (4.62 hours) from `UmarRamzan/common-voice-urdu-processed`, 3 epochs, 750 steps.
+
+| Metric | Value |
+|---|---|
+| Final train loss | 0.90 |
+| Eval loss | 0.45 |
+| **Eval WER** | **29.43%** |
+| Training time | ~1 hour (T4 GPU) |
+
+**Model:** [Naveef/whisper-small-ur](https://huggingface.co/Naveef/whisper-small-ur) on Hugging Face Hub.
+
+*Note: Mozilla removed Common Voice from Hugging Face in Oct 2025 (now via Mozilla Data Collective only). This project uses the `UmarRamzan/common-voice-urdu-processed` mirror.*
 
 | Model | n | WER (raw) | WER (normalized) | Mean latency (CPU) |
 |---|---|---|---|---|
 | whisper-small (zero-shot) | TBD | TBD | TBD | TBD |
-| whisper-small-ur (fine-tuned) | TBD | TBD | TBD | TBD |
+| whisper-small-ur (fine-tuned) | 500 | 29.43% | TBD | TBD |
 | whisper-large (zero-shot) | TBD | TBD | TBD | TBD |
 
 ## API usage
