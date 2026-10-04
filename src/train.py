@@ -192,7 +192,7 @@ def main() -> None:
         eval_dataset=vectorized["test"],
         data_collator=data_collator,
         compute_metrics=compute_metrics,
-        tokenizer=processor.feature_extractor,  # lets Trainer save the processor
+        processing_class=processor.feature_extractor,  # lets Trainer save the processor
     )
 
     trainer.train()
