@@ -123,9 +123,11 @@ def main() -> None:
 
     # --- Feature extraction: waveform -> log-Mel, transcript -> label ids ---
     def prepare_dataset(batch):
-        sampling_rate = batch["audio"]["sampling_rate"][0]  # uniform 16 kHz
+        # batch["audio"] is a list of dicts when batched=True
+        audios = batch["audio"]
+        sampling_rate = audios[0]["sampling_rate"]  # uniform 16 kHz
         batch["input_features"] = processor.feature_extractor(
-            batch["audio"]["array"], sampling_rate=sampling_rate
+            [a["array"] for a in audios], sampling_rate=sampling_rate
         ).input_features
         batch["labels"] = processor.tokenizer(batch["sentence"]).input_ids
         return batch
