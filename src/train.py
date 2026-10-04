@@ -175,7 +175,6 @@ def main() -> None:
         save_steps=cfg["save_steps"],
         save_total_limit=cfg["save_total_limit"],
         logging_steps=cfg["logging_steps"],
-        logging_dir=cfg["logging_dir"],
         predict_with_generate=cfg["predict_with_generate"],
         generation_max_length=cfg["generation_max_length"],
         load_best_model_at_end=cfg["load_best_model_at_end"],
